@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterUserController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,9 @@ Route::patch('/blog/{post}', [PostController::class, 'update'])->name('posts.upd
 Route::delete('/blog/{post}', [PostController::class, 'destroy'])->name('posts.destroy'); //ruta destroy
 
 Route::view('/about', 'about')->name('about');
+
+Route::get('/login', function () {
+    return 'Login page';
+})->name('login');
+Route::view('/register', 'auth.register')->name('register');
+Route::post('/register', [RegisterUserController::class, 'store']);
