@@ -23,9 +23,37 @@
                     <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
                         href="{{ route('contact') }}">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary" href="{{ route('register') }}">Register</a>
-                </li>
+
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}"
+                            href="{{ route('register') }}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}"
+                            href="{{ route('login') }}">Login</a>
+                    </li>
+                @endguest
+
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDarkDropdownMenuLink"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <li class="">
+                                    <a class="dropdown-item" href="#"
+                                        onclick="this.closest('form').submit()">Logout</a>
+                                </li>
+                            </form>
+                        </ul>
+                    </li>
+                @endauth
+
+
             </ul>
         </div>
     </div>

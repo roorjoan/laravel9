@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('home');
 Route::view('/contact', 'contact')->name('contact');
 
+//CRUD post
 Route::get('/blog', [PostController::class, 'index'])->name('posts.index'); //ruta listar
 Route::get('/blog/create', [PostController::class, 'create'])->name('posts.create'); //ruta mostrar formulario de crear
 Route::post('/blog', [PostController::class, 'store'])->name('posts.store'); //ruta guardar
@@ -28,8 +30,9 @@ Route::delete('/blog/{post}', [PostController::class, 'destroy'])->name('posts.d
 
 Route::view('/about', 'about')->name('about');
 
-Route::get('/login', function () {
-    return 'Login page';
-})->name('login');
+//Register and login users
 Route::view('/register', 'auth.register')->name('register');
 Route::post('/register', [RegisterUserController::class, 'store']);
+Route::view('/login', 'auth.login')->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
